@@ -93,10 +93,10 @@ public class TeacherSpecification {
 
   public static final class Builder {
 
-    private String name = null;
-    private String email = null;
-    private Specialization specialization = null;
-    private Boolean available = null;
+    private String name;
+    private String email;
+    private Specialization specialization;
+    private Boolean available;
 
     private Builder() {
       throw new IllegalStateException("Utility class");

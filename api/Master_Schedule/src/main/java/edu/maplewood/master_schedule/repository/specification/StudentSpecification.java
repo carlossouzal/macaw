@@ -14,6 +14,7 @@ import org.springframework.util.StringUtils;
 public class StudentSpecification {
 
   private StudentSpecification() {
+    throw new IllegalStateException("Utility class");
   }
 
   public static Specification<Student> build(
@@ -150,16 +151,16 @@ public class StudentSpecification {
 
   public static final class Builder {
 
-    private String name = null;
-    private String email = null;
-    private Integer gradeLevelMin = null;
-    private Integer gradeLevelMax = null;
-    private Integer enrollmentYearMin = null;
-    private Integer enrollmentYearMax = null;
-    private Integer expectedGraduationYearMin = null;
-    private Integer expectedGraduationYearMax = null;
-    private Course prerquiredCourse = null;
-    private Student.StudentStatus status = null;
+    private String name;
+    private String email;
+    private Integer gradeLevelMin;
+    private Integer gradeLevelMax;
+    private Integer enrollmentYearMin;
+    private Integer enrollmentYearMax;
+    private Integer expectedGraduationYearMin;
+    private Integer expectedGraduationYearMax;
+    private Course prerquiredCourse;
+    private Student.StudentStatus status;
 
     private Builder() {
     }

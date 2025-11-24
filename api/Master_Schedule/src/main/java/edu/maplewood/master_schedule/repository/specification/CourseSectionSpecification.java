@@ -12,6 +12,7 @@ import org.springframework.data.jpa.domain.Specification;
 public class CourseSectionSpecification {
 
   private CourseSectionSpecification() {
+    throw new IllegalStateException("Utility class");
   }
 
   public static Specification<CourseSection> build(
@@ -74,10 +75,10 @@ public class CourseSectionSpecification {
 
   public static final class Builder {
 
-    private String code = null;
-    private Course course = null;
-    private Semester semester = null;
-    private Teacher teacher = null;
+    private String code;
+    private Course course;
+    private Semester semester;
+    private Teacher teacher;
 
     private Builder() {
     }

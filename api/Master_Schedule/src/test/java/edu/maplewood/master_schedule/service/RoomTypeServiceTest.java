@@ -10,9 +10,7 @@ import edu.maplewood.master_schedule.repository.RoomTypeRepository;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
 public class RoomTypeServiceTest {
 
   private RoomTypeRepository repository;

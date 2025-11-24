@@ -115,13 +115,13 @@ public class ClassroomSpecification {
 
   public static final class Builder {
 
-    private String name = null;
-    private Integer capacityMin = null;
-    private Integer capacityMax = null;
-    private String equipment = null;
-    private Integer floor = null;
-    private RoomType roomType = null;
-    private Boolean available = null;
+    private String name;
+    private Integer capacityMin;
+    private Integer capacityMax;
+    private String equipment;
+    private Integer floor;
+    private RoomType roomType;
+    private Boolean available;
 
     private Builder() {
     }
