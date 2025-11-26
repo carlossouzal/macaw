@@ -12,8 +12,8 @@ public class IntervalValidator implements ConstraintValidator<ValidInterval, Obj
 
   @Override
   public void initialize(ValidInterval constraintAnnotation) {
-    this.minFieldName = constraintAnnotation.maxField();
-    this.maxFieldName = constraintAnnotation.minField();
+    this.minFieldName = constraintAnnotation.minField();
+    this.maxFieldName = constraintAnnotation.maxField();
   }
 
   @Override
