@@ -18,17 +18,14 @@ public class CourseSectionService {
   private static final Logger LOGGER = LoggerFactory.getLogger(CourseSectionService.class);
   private final CourseSectionRepository courseSectionRepository;
   private final SemesterService semesterService;
-  private final ClassroomService classroomService;
 
 
   @Autowired
   public CourseSectionService(
       CourseSectionRepository courseSectionRepository,
-      SemesterService semesterService,
-      ClassroomService classroomService) {
+      SemesterService semesterService) {
     this.semesterService = semesterService;
     this.courseSectionRepository = courseSectionRepository;
-    this.classroomService = classroomService;
   }
 
   public List<CourseSection> findAll() {

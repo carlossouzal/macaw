@@ -11,7 +11,7 @@ import java.util.Objects;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.StringUtils;
 
-public class StudentSpecification {
+public final class StudentSpecification {
 
   private StudentSpecification() {
     throw new IllegalStateException("Utility class");

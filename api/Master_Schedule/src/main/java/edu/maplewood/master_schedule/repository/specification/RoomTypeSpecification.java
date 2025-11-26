@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Objects;
 import org.springframework.data.jpa.domain.Specification;
 
-public class RoomTypeSpecification {
+public final class RoomTypeSpecification {
 
   private RoomTypeSpecification() {
     throw new IllegalStateException("Utility class");

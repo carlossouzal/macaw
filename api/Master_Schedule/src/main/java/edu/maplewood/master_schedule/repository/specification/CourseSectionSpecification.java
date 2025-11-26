@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Objects;
 import org.springframework.data.jpa.domain.Specification;
 
-public class CourseSectionSpecification {
+public final class CourseSectionSpecification {
 
   private CourseSectionSpecification() {
     throw new IllegalStateException("Utility class");

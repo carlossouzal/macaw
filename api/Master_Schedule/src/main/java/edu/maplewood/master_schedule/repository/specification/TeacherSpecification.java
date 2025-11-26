@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Objects;
 import org.springframework.data.jpa.domain.Specification;
 
-public class TeacherSpecification {
+public final class TeacherSpecification {
 
   private TeacherSpecification() {
     throw new IllegalStateException("Utility class");
