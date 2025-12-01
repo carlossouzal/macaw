@@ -82,12 +82,12 @@ export default function StudentPage() {
                   p="4"
                   mb="4"
                 >
-                  <Text fontWeight={"bold"}>{student.first_name} {student.last_name}</Text>
-                  <Text>Email: {student.email}</Text>
-                  <Text>Grade Level: {student.grade_level}</Text>
-                  <Text>Enrollment Year: {student.enrollment_year}</Text>
-                  <Text>Expected Graduation Year: {student.expected_graduation_year}</Text>
-                  <Text>Status: {student.status}</Text>
+                    <Text fontWeight={"bold"}>{student.first_name} {student.last_name}</Text>
+                    <Text>Email: {student.email}</Text>
+                    <Text>Grade Level: {student.grade_level}</Text>
+                    <Text>Enrollment Year: {student.enrollment_year}</Text>
+                    <Text>Expected Graduation Year: {student.expected_graduation_year}</Text>
+                    <Text>Status: {student.status}</Text>
                 </Box>
               ))}
             </Box>

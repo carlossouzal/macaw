@@ -3,44 +3,41 @@ package edu.maplewood.master_schedule.controller.parameters;
 import edu.maplewood.master_schedule.config.Constants;
 import edu.maplewood.master_schedule.controller.helper.annotation.ValidInterval;
 import edu.maplewood.master_schedule.controller.helper.annotation.ValidSortBy;
-import edu.maplewood.master_schedule.entity.Student;
-import jakarta.validation.constraints.Max;
+import edu.maplewood.master_schedule.entity.Course;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Pattern;
+import java.math.BigDecimal;
 
+@ValidInterval(minField = "creditsMin", maxField = "creditsMax")
+@ValidInterval(minField = "hoursPerWeekMin", maxField = "hoursPerWeekMax")
 @ValidInterval(minField = "gradeLevelMin", maxField = "gradeLevelMax")
-@ValidInterval(minField = "enrollmentYearMin", maxField = "enrollmentYearMax")
-@ValidInterval(minField = "expectedGraduationYearMin", maxField = "expectedGraduationYearMax")
-public record StudentsCriteria(
+public record CourseCriteria(
     @Min(0)
     Integer page,
     @Min(1)
     Integer size,
-    @ValidSortBy(entity = Student.class, message = "Invalid sortBy parameter for Student")
+    @ValidSortBy(entity = Course.class, message = "Invalid sortBy parameter for Course")
     String sortBy,
     @Pattern(regexp = "ASC|DESC", message = "Sort direction must be ASC or DESC")
     String sortDirection,
+    String code,
     String name,
-    String email,
-    @Min(9)
+    String description,
+    BigDecimal creditsMin,
+    BigDecimal creditsMax,
+    Integer hoursPerWeekMin,
+    Integer hoursPerWeekMax,
+    @Pattern(regexp = "CORE|ELECTIVE", message = "course type must be either 'CORE' or 'ELECTIVE'")
+    String courseType,
     Integer gradeLevelMin,
-    @Max(12)
     Integer gradeLevelMax,
-    @Min(0)
-    Integer enrollmentYearMin,
-    @Min(0)
-    Integer enrollmentYearMax,
-    @Min(0)
-    Integer expectedGraduationYearMin,
-    @Min(0)
-    Integer expectedGraduationYearMax,
-    @Min(0)
-    Long prerequiredCourseId,
-    @Pattern(regexp = "ACTIVE|INACTIVE", message = "Status must be an existing status (ACTIVE)")
-    String status
+    @Pattern(regexp = "FALL|SPRING", message = "Order in year must be either 'FALL' or 'SPRING'")
+    String semesterOrder,
+    Long specializationId,
+    Long prerequisiteId
 ) {
 
-  public StudentsCriteria {
+  public CourseCriteria {
     if (page == null) {
       page = Constants.DEFAULT_PAGE_NUMBER;
     }

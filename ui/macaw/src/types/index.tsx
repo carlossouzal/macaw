@@ -44,6 +44,32 @@ type Student = {
   gpa: number;
 };
 
+type Classroom = {
+  id: number;
+  name: string;
+  capacity: number;
+  equipment: string;
+  floor: number;
+  created_at: string;
+  room_type: RoomType;
+}
+
+type Course = {
+  id: number;
+  code: string;
+  name: string;
+  description: string;
+  credits: number;
+  hours_per_week: number;
+  course_type: "CORE" | "ELECTIVE";
+  grade_level_min: number;
+  grade_level_max: number;
+  semester_order: "FALL" | "SPRING";
+  created_at: string;
+  specialization: Specialization | null;
+  prerequisite: Course | null;
+};
+
 type ResponseList<T> = {
   total: number;
   page: number;
@@ -51,4 +77,4 @@ type ResponseList<T> = {
   items: T[];
 };
 
-export type { Semester, ResponseList, Teacher, Specialization, RoomType, Student };
+export type { Semester, ResponseList, Teacher, Specialization, RoomType, Student, Classroom, Course };

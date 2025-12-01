@@ -3,44 +3,34 @@ package edu.maplewood.master_schedule.controller.parameters;
 import edu.maplewood.master_schedule.config.Constants;
 import edu.maplewood.master_schedule.controller.helper.annotation.ValidInterval;
 import edu.maplewood.master_schedule.controller.helper.annotation.ValidSortBy;
-import edu.maplewood.master_schedule.entity.Student;
-import jakarta.validation.constraints.Max;
+import edu.maplewood.master_schedule.entity.Classroom;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Pattern;
 
-@ValidInterval(minField = "gradeLevelMin", maxField = "gradeLevelMax")
-@ValidInterval(minField = "enrollmentYearMin", maxField = "enrollmentYearMax")
-@ValidInterval(minField = "expectedGraduationYearMin", maxField = "expectedGraduationYearMax")
-public record StudentsCriteria(
+
+@ValidInterval(minField = "capacityMin", maxField = "capacityMax")
+public record ClassroomCriteria(
     @Min(0)
     Integer page,
     @Min(1)
     Integer size,
-    @ValidSortBy(entity = Student.class, message = "Invalid sortBy parameter for Student")
+    @ValidSortBy(entity = Classroom.class, message = "Invalid sortBy parameter for Classroom")
     String sortBy,
     @Pattern(regexp = "ASC|DESC", message = "Sort direction must be ASC or DESC")
     String sortDirection,
     String name,
-    String email,
-    @Min(9)
-    Integer gradeLevelMin,
-    @Max(12)
-    Integer gradeLevelMax,
     @Min(0)
-    Integer enrollmentYearMin,
+    Integer capacityMin,
     @Min(0)
-    Integer enrollmentYearMax,
+    Integer capacityMax,
+    String equipment,
     @Min(0)
-    Integer expectedGraduationYearMin,
-    @Min(0)
-    Integer expectedGraduationYearMax,
-    @Min(0)
-    Long prerequiredCourseId,
-    @Pattern(regexp = "ACTIVE|INACTIVE", message = "Status must be an existing status (ACTIVE)")
-    String status
+    Integer floor,
+    Long roomTypeId,
+    Boolean available
 ) {
 
-  public StudentsCriteria {
+  public ClassroomCriteria {
     if (page == null) {
       page = Constants.DEFAULT_PAGE_NUMBER;
     }

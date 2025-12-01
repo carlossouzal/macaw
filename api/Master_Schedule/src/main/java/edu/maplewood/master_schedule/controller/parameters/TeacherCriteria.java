@@ -15,14 +15,17 @@ public record TeacherCriteria(
     Integer page,
     @Min(1)
     Integer size,
-    @ValidSortBy(entity = Teacher.class, message = "Invalid sortBy parameter for Semester")
+    @ValidSortBy(entity = Teacher.class, message = "Invalid sortBy parameter for Teacher")
     String sortBy,
     @Pattern(regexp = "ASC|DESC", message = "Sort direction must be ASC or DESC")
     String sortDirection,
     String name,
     String email,
+    @Min(0)
     Integer maxDailyHoursBegin,
+    @Min(0)
     Integer maxDailyHoursEnd,
+    @Min(0)
     Long specializationId,
     LocalDateTime createdAtBegin,
     LocalDateTime createdAtEnd

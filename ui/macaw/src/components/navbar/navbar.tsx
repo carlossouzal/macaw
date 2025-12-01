@@ -19,12 +19,12 @@ function Navbar() {
     >
         <Flex align="center" className='flex space-x-4 justify-between' gap="10">
             <Box>
-              <Link variant="plain" href="#">
+              <Link variant="plain" href="/classrooms">
                 <Text textStyle="xl" className="item" >Classroom</Text>
               </Link>
             </Box>
             <Box>
-              <Link variant="plain" href="#">
+              <Link variant="plain" href="/courses">
                 <Text textStyle="xl" className="item" >Course</Text>
               </Link>
             </Box>

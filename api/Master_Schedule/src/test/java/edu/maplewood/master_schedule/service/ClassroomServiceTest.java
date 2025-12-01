@@ -19,11 +19,13 @@ public class ClassroomServiceTest {
 
   private ClassroomRepository classroomRepository;
   private ClassroomService classroomService;
+  private RoomTypeService roomTypeService;
 
   @BeforeEach
   void setUp() {
     classroomRepository = mock(ClassroomRepository.class);
-    classroomService = new ClassroomService(classroomRepository);
+    roomTypeService = mock(RoomTypeService.class);
+    classroomService = new ClassroomService(classroomRepository, roomTypeService);
   }
 
   @Test

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDateTime;
 
 public record TeacherResponse(
-    long id,
+    Long id,
     @JsonProperty("first_name") String firstName,
     @JsonProperty("last_name") String lastName,
     String email,

@@ -4,6 +4,8 @@ import Layout from "./layout.tsx";
 import SchedulePage from "./pages/schedule.tsx";
 import TeacherPage from "./pages/teacher.tsx";
 import StudentPage from "./pages/student.tsx";
+import ClassroomPage from "./pages/classroom.tsx";
+import CoursePage from "./pages/course.tsx";
 
 const router = createBrowserRouter([
     {
@@ -66,6 +68,36 @@ const router = createBrowserRouter([
                     });
                     if (!response.ok) {
                         throw new Response("Failed to load students", { status: response.status });
+                    }
+                    return response.json();
+                },
+            },
+            {
+                path: "/classrooms",
+                element: <ClassroomPage />,
+                loader: async ({ request }) => {
+                    const url = new URL(request.url);
+                    const qs = url.search;
+                    const response = await fetch(`/api/classrooms${qs}`, {
+                        headers: { "Accept": "application/json" },
+                    });
+                    if (!response.ok) {
+                        throw new Response("Failed to load classrooms", { status: response.status });
+                    }
+                    return response.json();
+                },
+            },
+            {
+                path: "/courses",
+                element: <CoursePage />,
+                loader: async ({ request }) => {
+                    const url = new URL(request.url);
+                    const qs = url.search;
+                    const response = await fetch(`/api/courses${qs}`, {
+                        headers: { "Accept": "application/json" },
+                    });
+                    if (!response.ok) {
+                        throw new Response("Failed to load courses", { status: response.status });
                     }
                     return response.json();
                 },
