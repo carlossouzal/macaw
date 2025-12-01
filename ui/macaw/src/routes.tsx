@@ -1,7 +1,6 @@
 import { createBrowserRouter } from "react-router-dom"
 import SemesterPage from "./pages/semester.tsx"
 import Layout from "./layout.tsx";
-import SchedulePage from "./pages/schedule.tsx";
 import TeacherPage from "./pages/teacher.tsx";
 import StudentPage from "./pages/student.tsx";
 import ClassroomPage from "./pages/classroom.tsx";
@@ -101,10 +100,6 @@ const router = createBrowserRouter([
                     }
                     return response.json();
                 },
-            },
-            {
-                path: "/schedule",
-                element: <SchedulePage />,
             }
         ],
     },
