@@ -5,9 +5,11 @@ import edu.maplewood.master_schedule.entity.Specialization;
 import edu.maplewood.master_schedule.entity.Teacher;
 import edu.maplewood.master_schedule.repository.TeacherRepository;
 import edu.maplewood.master_schedule.repository.specification.TeacherSpecification;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.criteria.JoinType;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +45,7 @@ public class TeacherService {
     if (criteria.specializationId() != null) {
       specialization = specializationService.findById(criteria.specializationId());
     }
-    
+
     Specification<Teacher> specs = TeacherSpecification.builder()
         .name(criteria.name())
         .email(criteria.email())
@@ -61,6 +63,14 @@ public class TeacherService {
     );
 
     return repository.findAll(specs, pageable);
+  }
+
+  public Teacher findById(Long id) {
+    Optional<Teacher> teacher = repository.findById(id);
+    if (teacher.isEmpty()) {
+      throw new EntityNotFoundException("Teacher with id " + id + " not found");
+    }
+    return teacher.get();
   }
 
   @Transactional(readOnly = true)

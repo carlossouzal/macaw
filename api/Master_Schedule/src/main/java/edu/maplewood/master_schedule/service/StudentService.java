@@ -5,6 +5,7 @@ import edu.maplewood.master_schedule.entity.Course;
 import edu.maplewood.master_schedule.entity.CourseSection;
 import edu.maplewood.master_schedule.entity.Student;
 import edu.maplewood.master_schedule.entity.Student.StudentStatus;
+import edu.maplewood.master_schedule.exception.NoAvailableResource;
 import edu.maplewood.master_schedule.repository.StudentRepository;
 import edu.maplewood.master_schedule.repository.specification.StudentSpecification;
 import jakarta.transaction.Transactional;
@@ -99,9 +100,16 @@ public class StudentService {
     CourseSection courseWithSpots = course.getCourseSections().stream()
         .filter(courseSection -> courseSection.getStudents().size() < 10)
         .findFirst()
-        .orElse(createNewCourseSection(course));
+        .orElseThrow(() -> new NoAvailableResource("No enrolled in course " + course.getName()));
 
     student.getCourseSectionsEnrolled().add(courseWithSpots);
+    if (courseWithSpots.getStudents().size() >= 10) {
+      try {
+        createNewCourseSection(courseWithSpots.getCourse());
+      } catch (NoAvailableResource noAvailableResource) {
+        LOGGER.warn("No more sections available for course {}", course.getName());
+      }
+    }
     return repository.save(student);
   }
 

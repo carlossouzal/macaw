@@ -16,7 +16,7 @@ import lombok.ToString;
 public class RoomType {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   @Column(nullable = false, length = 50)
   private String name;

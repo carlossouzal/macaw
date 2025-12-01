@@ -70,6 +70,25 @@ type Course = {
   prerequisite: Course | null;
 };
 
+type ScheduleAssignment = {
+  id: number;
+  classroom: Classroom;
+  day_of_week: "MONDAY" | "TUESDAY" | "WEDNESDAY" | "THURSDAY" | "FRIDAY" | "SATURDAY" | "SUNDAY";
+  time_slot: number;
+  is_active: boolean;
+};
+
+type CourseSection = {
+  id: number;
+  code: string;
+  created_at: string;
+  course: Course | null;
+  semester: Semester | null;
+  teacher: Teacher | null;
+  schedule_assignments: ScheduleAssignment[] | null;
+  students: Student[] | null;
+};
+
 type ResponseList<T> = {
   total: number;
   page: number;
@@ -77,4 +96,4 @@ type ResponseList<T> = {
   items: T[];
 };
 
-export type { Semester, ResponseList, Teacher, Specialization, RoomType, Student, Classroom, Course };
+export type { Semester, ResponseList, Teacher, Specialization, RoomType, Student, Classroom, Course, CourseSection, ScheduleAssignment };

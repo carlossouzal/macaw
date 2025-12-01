@@ -93,14 +93,12 @@ export default function ClassroomPage() {
                     justifyContent={"center"}
                 >
                 <PageListPagination
-                    value={size}
                     page={page}
                     size={size}
                     data={data}
-                    items={classrooms}
                     onChange={(value) => {
-                    const n = typeof value === "string" ? Number(value) : value;
-                    if (!Number.isNaN(n)) goToPage(n - 1);
+                        const n = typeof value === "string" ? Number(value) : value;
+                        if (!Number.isNaN(n)) goToPage(n - 1);
                     }}
                 />
                 </Box>

@@ -22,12 +22,16 @@ public class CourseSectionServiceTest {
   private CourseSectionRepository repository;
   private CourseSectionService service;
   private SemesterService semesterService;
+  private CourseService courseService;
+  private TeacherService teacherService;
 
   @BeforeEach
   public void setUp() {
     repository = mock(CourseSectionRepository.class);
     semesterService = mock(SemesterService.class);
-    service = new CourseSectionService(repository, semesterService);
+    courseService = mock(CourseService.class);
+    teacherService = mock(TeacherService.class);
+    service = new CourseSectionService(repository, semesterService, courseService, teacherService);
   }
 
   @Test

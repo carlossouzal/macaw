@@ -23,28 +23,28 @@ const PageListDetails = (props: PageListDetailsProps) => {
             justifyContent={"space-between"}
         >
             <Box>
-            <Text
-                color="fg.subtle"
-            >
-                Page {props.page + 1} of {Array.isArray(props.data) ? Math.ceil(props.items.length / props.size) : Math.ceil(((props.data.total ?? 0)) / props.size)} |
-                {Array.isArray(props.data) ? null : typeof props.data.total === "number" ? ` | Total results: ${props.data.total}` : null}
-            </Text>
-            </Box>
-            <Flex>
-            <Box>
                 <Text
-                color="fg.subtle"
-                mr={4}
+                    color="fg.subtle"
                 >
-                Page Size:
+                    Page {props.page + 1} of {Math.ceil(((props.data.total ?? 0)) / props.size)} |
+                    {Array.isArray(props.data) ? null : typeof props.data.total === "number" ? ` | Total results: ${props.data.total}` : null}
                 </Text>
             </Box>
-            <Box>
-                <PageSizeSelector 
-                    value={props.size} 
-                    onChange={props.onChange}
-                />
-            </Box>
+            <Flex>
+                <Box>
+                    <Text
+                    color="fg.subtle"
+                    mr={4}
+                    >
+                    Page Size:
+                    </Text>
+                </Box>
+                <Box>
+                    <PageSizeSelector 
+                        value={props.size} 
+                        onChange={props.onChange}
+                    />
+                </Box>
             </Flex>
         </Flex>
     )

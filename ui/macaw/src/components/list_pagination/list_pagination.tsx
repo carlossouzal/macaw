@@ -10,24 +10,25 @@ import {
 import { LuChevronLeft, LuChevronRight } from "react-icons/lu"
 
 interface PageListPaginationProps {
-    value: string | number;
     page: string | number;
     size: number;
     data: any;
-    items: any[];
     onChange: (value: string ) => void;
 }
 
 const PageListPagination = (props: PageListPaginationProps) => {
     const totalItems = () => ((props.data.total ?? 0));
-    const currentPage = () => (props.page);
+    const currentPage = (page: string | number) => {
+        console.log("Page list Current page:", page);
+        return page;
+    };
 
     return (
         <Stack gap="8" align="center" width="100%">
             <Pagination.Root 
                 count={totalItems()} 
                 pageSize={props.size} 
-                currentPage={currentPage()}
+                currentPage={currentPage(props.page)}
                 onPageChange={(details) => props.onChange(String(details.page))}
             >
                 <ButtonGroup variant="ghost" size={"xs"}>
@@ -40,7 +41,7 @@ const PageListPagination = (props: PageListPaginationProps) => {
                     <Pagination.Items
                         render={(page) => (
                             <IconButton variant={{ base: "ghost", _selected: "solid" }}>
-                            {page.value}
+                                {page.value}
                             </IconButton>
                         )}
                     />

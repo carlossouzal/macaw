@@ -15,6 +15,7 @@ public final class Constants {
   public static final String TEACHERS = V1 + "/teachers";
   public static final String CLASSROOM = V1 + "/classrooms";
   public static final String COURSE = V1 + "/courses";
+  public static final String COURSE_SECTION = V1 + "/course-sections";
 
   public static final String DEFAULT_SORT_BY = "id";
   public static final String DEFAULT_SORT_DIRECTION = "ASC";

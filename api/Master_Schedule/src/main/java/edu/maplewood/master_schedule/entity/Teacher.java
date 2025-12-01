@@ -2,6 +2,8 @@ package edu.maplewood.master_schedule.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
@@ -17,6 +19,7 @@ import org.hibernate.annotations.CreationTimestamp;
 public class Teacher {
 
   @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   @Column(name = "first_name", length = 50, nullable = false)
   private String firstName;
@@ -33,7 +36,7 @@ public class Teacher {
   @ManyToOne(optional = false)
   private Specialization specialization;
 
-  @OneToMany
+  @OneToMany(mappedBy = "teacher")
   @ToString.Exclude
   @EqualsAndHashCode.Exclude
   private List<CourseSection> courseSections;

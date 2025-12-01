@@ -97,15 +97,20 @@ public final class ClassroomSpecification {
     }
 
     return (root, query, cb) -> {
-      Expression<Long> countExpr =
-          cb.count(root.join("timeSlots", JoinType.LEFT));
+      var join = root.join("assignments", JoinType.LEFT);
+      join.on(cb.equal(join.get("isActive"), true));
+
       query.groupBy(root.get("id"));
 
+      Expression<Long> countExpr = cb.count(join);
+
       if (available) {
-        return cb.lessThan(countExpr, countExpr);
+        query.having(cb.equal(countExpr, 0L));
       } else {
-        return cb.greaterThanOrEqualTo(countExpr, countExpr);
+        query.having(cb.greaterThan(countExpr, 0L));
       }
+
+      return cb.conjunction();
     };
   }
 
