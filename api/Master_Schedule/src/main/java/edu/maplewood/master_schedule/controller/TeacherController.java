@@ -33,7 +33,7 @@ public class TeacherController {
 
   @GetMapping
   @ResponseStatus(HttpStatus.OK)
-  public ResponseList<TeacherResponse> getSemesters(
+  public ResponseList<TeacherResponse> getTeachers(
       @Valid @ModelAttribute TeacherCriteria criteria) {
     LOGGER.debug("Fetching all teachers");
     Page<Teacher> teacherPage = teacherService.find(criteria);

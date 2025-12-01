@@ -39,7 +39,7 @@ function Navbar() {
               </Link>
             </Box>
             <Box>
-              <Link variant="plain" href="#">
+              <Link variant="plain" href="/students">
                 <Text textStyle="xl" className="item" >Student</Text>
               </Link>
             </Box>

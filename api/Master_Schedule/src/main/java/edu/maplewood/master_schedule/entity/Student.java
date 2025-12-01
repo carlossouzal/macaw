@@ -70,5 +70,6 @@ public class Student {
 
   public enum StudentStatus {
     ACTIVE,
+    INACTIVE
   }
 }

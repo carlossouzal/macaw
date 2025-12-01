@@ -3,32 +3,39 @@ package edu.maplewood.master_schedule.controller.parameters;
 import edu.maplewood.master_schedule.config.Constants;
 import edu.maplewood.master_schedule.controller.helper.annotation.ValidInterval;
 import edu.maplewood.master_schedule.controller.helper.annotation.ValidSortBy;
-import edu.maplewood.master_schedule.entity.Teacher;
+import edu.maplewood.master_schedule.entity.Student;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Pattern;
-import java.time.LocalDateTime;
 
-@ValidInterval(minField = "maxDailyHoursBegin", maxField = "maxDailyHoursEnd")
-@ValidInterval(minField = "createdAtBegin", maxField = "createdAtEnd")
-public record TeacherCriteria(
+@ValidInterval(minField = "gradeLevelMin", maxField = "gradeLevelMax")
+@ValidInterval(minField = "enrollmentYearMin", maxField = "enrollmentYearMax")
+@ValidInterval(minField = "expectedGraduationYearMin", maxField = "expectedGraduationYearMax")
+public record StudentsCriteria(
     @Min(0)
     Integer page,
     @Min(1)
     Integer size,
-    @ValidSortBy(entity = Teacher.class, message = "Invalid sortBy parameter for Semester")
+    @ValidSortBy(entity = Student.class, message = "Invalid sortBy parameter for Semester")
     String sortBy,
     @Pattern(regexp = "ASC|DESC", message = "Sort direction must be ASC or DESC")
     String sortDirection,
     String name,
     String email,
-    Integer maxDailyHoursBegin,
-    Integer maxDailyHoursEnd,
-    Long specializationId,
-    LocalDateTime createdAtBegin,
-    LocalDateTime createdAtEnd
+    @Min(9)
+    Integer gradeLevelMin,
+    @Max(12)
+    Integer gradeLevelMax,
+    Integer enrollmentYearMin,
+    Integer enrollmentYearMax,
+    Integer expectedGraduationYearMin,
+    Integer expectedGraduationYearMax,
+    Long prerequiredCourseId,
+    @Pattern(regexp = "ACTIVE|INACTIVE", message = "Status must be an existing status (ACTIVE)")
+    String status
 ) {
 
-  public TeacherCriteria {
+  public StudentsCriteria {
     if (page == null) {
       page = Constants.DEFAULT_PAGE_NUMBER;
     }

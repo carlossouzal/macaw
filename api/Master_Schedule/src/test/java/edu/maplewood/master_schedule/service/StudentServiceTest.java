@@ -16,12 +16,14 @@ public class StudentServiceTest {
   private StudentRepository repository;
   private StudentService service;
   private CourseSectionService courseSectionService;
+  private CourseService courseService;
 
   @BeforeEach
   public void setUp() {
     repository = mock(StudentRepository.class);
     courseSectionService = mock(CourseSectionService.class);
-    service = new StudentService(repository, courseSectionService);
+    courseService = mock(CourseService.class);
+    service = new StudentService(repository, courseSectionService, courseService);
   }
 
   @Test

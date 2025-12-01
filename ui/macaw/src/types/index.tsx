@@ -31,6 +31,19 @@ type RoomType = {
     description: string;
 };
 
+type Student = {
+  id: number;
+  first_name: string;
+  last_name: string;
+  email: string;
+  grade_level: number;
+  enrollment_year: number;
+  expected_graduation_year: number;
+  status: "ACTIVE" | "INACTIVE";
+  created_at: string;
+  gpa: number;
+};
+
 type ResponseList<T> = {
   total: number;
   page: number;
@@ -38,4 +51,4 @@ type ResponseList<T> = {
   items: T[];
 };
 
-export type { Semester, ResponseList, Teacher, Specialization, RoomType };
+export type { Semester, ResponseList, Teacher, Specialization, RoomType, Student };

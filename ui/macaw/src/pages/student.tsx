@@ -2,13 +2,13 @@ import { useLoaderData, useSearchParams } from "react-router-dom";
 import { useCallback } from "react";
 import { Box, Container, Grid, Text, GridItem, Flex } from "@chakra-ui/react";
 import "./pages.css";
-import type { ResponseList, Teacher } from "../types";
+import type { ResponseList, Student } from "../types";
 import PageListDetails from "../components/list_details/list_details";
 import PageListPagination from "../components/list_pagination/list_pagination";
 
 
-export default function TeacherPage() {
-  const data = useLoaderData() as ResponseList<Teacher> | Teacher[];
+export default function StudentPage() {
+  const data = useLoaderData() as ResponseList<Student> | Student[];
   const [params, setParams] = useSearchParams();
 
   const page = Number(params.get("page") ?? 0);
@@ -17,11 +17,12 @@ export default function TeacherPage() {
   const sortDirection = params.get("sortDirection") ?? "DESC";
   const name = params.get("name") ?? "";
   const email = params.get("email") ?? "";
-  const maxDailyHoursBegin = Number(params.get("maxDailyHoursBegin") ?? 0);
-  const maxDailyHoursEnd = Number(params.get("maxDailyHoursEnd") ?? 0);
-  const specializationId = Number(params.get("specializationId") ?? 0);
-  const createdAtBegin = params.get("createdAtBegin") ?? "";
-  const createdAtEnd = params.get("createdAtEnd") ?? "";
+  const gradeLevelMin = Number(params.get("gradeLevelMin") ?? 0);
+  const gradeLevelMax = Number(params.get("gradeLevelMax") ?? 0);
+  const expectedGraduationYearMin = Number(params.get("expectedGraduationYearMin") ?? 0);
+  const expectedGraduationYearMax = Number(params.get("expectedGraduationYearMax") ?? 0);
+  const courseId = Number(params.get("courseId") ?? 0);
+  const status = params.get("status") ?? "";
 
   const updateParam = useCallback((key: string, value?: string) => {
     const next = new URLSearchParams(params);
@@ -37,7 +38,7 @@ export default function TeacherPage() {
     updateParam("sortDirection", dir);
   };
 
-  const teachers = Array.isArray(data) ? data : (data.items ?? []);
+  const students = Array.isArray(data) ? data : (data.items ?? []);
 
   return (
     <Container 
@@ -50,7 +51,7 @@ export default function TeacherPage() {
           justifyContent={"left"} 
           className="header"  
         >
-          <Text textStyle="2xl" color="#000020" fontWeight={"bold"}>Teachers</Text>
+          <Text textStyle="2xl" color="#000020" fontWeight={"bold"}>Students</Text>
         </Box>
         <Grid
           templateColumns="repeat(8, 1fr)"
@@ -65,7 +66,7 @@ export default function TeacherPage() {
               page={page}
               size={size}
               data={data}
-              items={teachers}
+              items={students}
               setSize={setSize}
               onChange={(value) => {
                 const n = typeof value === "string" ? Number(value) : value;
@@ -73,18 +74,20 @@ export default function TeacherPage() {
               }}
             />
             <Box>
-              {teachers.map((teacher) => (
+              {students.map((student) => (
                 <Box
-                  key={teacher.id}
+                  key={student.id}
                   borderWidth="1px"
                   borderRadius="lg"
                   p="4"
                   mb="4"
                 >
-                  <Text fontWeight={"bold"}>{teacher.first_name} {teacher.last_name}</Text>
-                  <Text>Email: {teacher.email}</Text>
-                  <Text>Max Daily Hours: {teacher.max_daily_hours}</Text>
-                  <Text>Specialization: {teacher.specialization ? teacher.specialization.name : "N/A"}</Text>
+                  <Text fontWeight={"bold"}>{student.first_name} {student.last_name}</Text>
+                  <Text>Email: {student.email}</Text>
+                  <Text>Grade Level: {student.grade_level}</Text>
+                  <Text>Enrollment Year: {student.enrollment_year}</Text>
+                  <Text>Expected Graduation Year: {student.expected_graduation_year}</Text>
+                  <Text>Status: {student.status}</Text>
                 </Box>
               ))}
             </Box>
@@ -96,7 +99,7 @@ export default function TeacherPage() {
                 page={page}
                 size={size}
                 data={data}
-                items={teachers}
+                items={students}
                 onChange={(value) => {
                   const n = typeof value === "string" ? Number(value) : value;
                   if (!Number.isNaN(n)) goToPage(n - 1);

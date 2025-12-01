@@ -26,7 +26,7 @@ public final class StudentSpecification {
       Integer enrollmentYearMax,
       Integer expectedGraduationYearMin,
       Integer expectedGraduationYearMax,
-      Course prerquiredCourse,
+      Course prerequiredCourse,
       Student.StudentStatus status
   ) {
     List<Specification<Student>> specs = new ArrayList<>();
@@ -35,7 +35,7 @@ public final class StudentSpecification {
     specs.add(gradeLevelBetween(gradeLevelMin, gradeLevelMax));
     specs.add(enrollmentYearBetween(enrollmentYearMin, enrollmentYearMax));
     specs.add(expectedGraduationYearBetween(expectedGraduationYearMin, expectedGraduationYearMax));
-    specs.add(prerequiredCourseContains(prerquiredCourse));
+    specs.add(prerequiredCourseContains(prerequiredCourse));
     specs.add(isStatus(status));
 
     return specs.stream()

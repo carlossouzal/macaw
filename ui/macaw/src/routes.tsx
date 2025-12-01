@@ -3,6 +3,7 @@ import SemesterPage from "./pages/semester.tsx"
 import Layout from "./layout.tsx";
 import SchedulePage from "./pages/schedule.tsx";
 import TeacherPage from "./pages/teacher.tsx";
+import StudentPage from "./pages/student.tsx";
 
 const router = createBrowserRouter([
     {
@@ -50,6 +51,21 @@ const router = createBrowserRouter([
                     });
                     if (!response.ok) {
                         throw new Response("Failed to load teachers", { status: response.status });
+                    }
+                    return response.json();
+                },
+            },
+            {
+                path: "/students",
+                element: <StudentPage />,
+                loader: async ({ request }) => {
+                    const url = new URL(request.url);
+                    const qs = url.search;
+                    const response = await fetch(`/api/students${qs}`, {
+                        headers: { "Accept": "application/json" },
+                    });
+                    if (!response.ok) {
+                        throw new Response("Failed to load students", { status: response.status });
                     }
                     return response.json();
                 },
