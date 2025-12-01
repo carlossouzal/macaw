@@ -1,0 +1,65 @@
+import { createBrowserRouter } from "react-router-dom"
+import SemesterPage from "./pages/semester.tsx"
+import Layout from "./layout.tsx";
+import SchedulePage from "./pages/schedule.tsx";
+import TeacherPage from "./pages/teacher.tsx";
+
+const router = createBrowserRouter([
+    {
+        path: "/",
+        element: (
+            <Layout />
+        ),
+        children: [
+            {
+                index: true,
+                element: <SemesterPage />,
+                loader: async () => {
+                    const res = await fetch(`/api/semesters`, {
+                        headers: { "Accept": "application/json" },
+                    });
+                    if (!res.ok) {
+                        throw new Response("Failed to load semesters", { status: res.status });
+                    }
+                    return res.json();
+                },
+            }, 
+            {
+                path: "/semesters",
+                element: <SemesterPage />,
+                loader: async ({ request }) => {
+                    const url = new URL(request.url);
+                    const qs = url.search;
+                    const response = await fetch(`/api/semesters${qs}`, {
+                        headers: { "Accept": "application/json" },
+                    });
+                    if (!response.ok) {
+                        throw new Response("Failed to load semesters", { status: response.status });
+                    }
+                    return response.json();
+                },
+            },
+            {
+                path: "/teachers",
+                element: <TeacherPage />,
+                loader: async ({ request }) => {
+                    const url = new URL(request.url);
+                    const qs = url.search;
+                    const response = await fetch(`/api/teachers${qs}`, {
+                        headers: { "Accept": "application/json" },
+                    });
+                    if (!response.ok) {
+                        throw new Response("Failed to load teachers", { status: response.status });
+                    }
+                    return response.json();
+                },
+            },
+            {
+                path: "/schedule",
+                element: <SchedulePage />,
+            }
+        ],
+    },
+]);
+
+export default router;

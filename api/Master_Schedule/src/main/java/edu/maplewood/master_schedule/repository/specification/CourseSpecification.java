@@ -189,6 +189,9 @@ public final class CourseSpecification {
     private Specialization specialization;
     private Course prerequisite;
 
+    private Builder() {
+    }
+
     public Builder code(String code) {
       this.code = code;
       return this;

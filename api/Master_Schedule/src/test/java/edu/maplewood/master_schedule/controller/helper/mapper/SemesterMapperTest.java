@@ -6,8 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import edu.maplewood.master_schedule.controller.dto.request.CreateSemesterRequest;
+import edu.maplewood.master_schedule.controller.dto.response.ResponseList;
 import edu.maplewood.master_schedule.controller.dto.response.SemesterResponse;
-import edu.maplewood.master_schedule.controller.dto.response.SemesterResponseList;
 import edu.maplewood.master_schedule.entity.Semester;
 import edu.maplewood.master_schedule.entity.Semester.OrderInYear;
 import java.time.LocalDate;
@@ -69,14 +69,14 @@ public class SemesterMapperTest {
     PageRequest pageable = PageRequest.of(1, 3); // page index 1, size 3
     Page<Semester> page = new PageImpl<>(content, pageable, 9); // total elements 9
 
-    SemesterResponseList responseList = SemesterMapper.toResponse(page);
+    ResponseList<SemesterResponse> responseList = SemesterMapper.toResponse(page);
 
     assertEquals(9, responseList.total());
     assertEquals(1, responseList.page());
     assertEquals(3, responseList.size());
-    assertEquals(3, responseList.semesters().size());
-    assertEquals(10L, responseList.semesters().get(0).id());
-    assertEquals(12L, responseList.semesters().get(2).id());
+    assertEquals(3, responseList.items().size());
+    assertEquals(10L, responseList.items().get(0).id());
+    assertEquals(12L, responseList.items().get(2).id());
   }
 
   @Test
@@ -100,7 +100,7 @@ public class SemesterMapperTest {
   }
 
   @Test
-  void toEntityHandlesEmptyOptionalDates_asNulls() {
+  void toEntityHandlesEmptyOptionalDatesAsNulls() {
     CreateSemesterRequest req = new CreateSemesterRequest(
         "Summer",
         2026,

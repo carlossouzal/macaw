@@ -76,6 +76,9 @@ public final class RoomTypeSpecification {
     private String description;
     private Specialization specialization;
 
+    private Builder() {
+    }
+
     public Builder name(String name) {
       this.name = name;
       return this;

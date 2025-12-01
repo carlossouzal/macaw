@@ -153,7 +153,7 @@ public final class SemesterSpecification {
     private LocalDateTime createdAtEnd;
 
     private Builder() {
-      throw new IllegalStateException("Utility class");
+      
     }
 
     public Builder name(String name) {

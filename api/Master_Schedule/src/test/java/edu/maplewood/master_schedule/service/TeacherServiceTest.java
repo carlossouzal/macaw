@@ -16,11 +16,13 @@ public class TeacherServiceTest {
 
   private TeacherRepository repository;
   private TeacherService service;
+  private SpecializationService specializationService;
 
   @BeforeEach
   public void setUp() {
     repository = mock(TeacherRepository.class);
-    service = new TeacherService(repository);
+    specializationService = mock(SpecializationService.class);
+    service = new TeacherService(repository, specializationService);
   }
 
   @Test
