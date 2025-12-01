@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Objects;
 import org.springframework.data.jpa.domain.Specification;
 
-public class ClassroomSpecification {
+public final class ClassroomSpecification {
 
   private ClassroomSpecification() {
     throw new IllegalStateException("Utility class");
@@ -97,15 +97,20 @@ public class ClassroomSpecification {
     }
 
     return (root, query, cb) -> {
-      Expression<Long> countExpr =
-          cb.count(root.join("timeSlots", JoinType.LEFT));
+      var join = root.join("assignments", JoinType.LEFT);
+      join.on(cb.equal(join.get("isActive"), true));
+
       query.groupBy(root.get("id"));
 
+      Expression<Long> countExpr = cb.count(join);
+
       if (available) {
-        return cb.lessThan(countExpr, countExpr);
+        query.having(cb.equal(countExpr, 0L));
       } else {
-        return cb.greaterThanOrEqualTo(countExpr, countExpr);
+        query.having(cb.greaterThan(countExpr, 0L));
       }
+
+      return cb.conjunction();
     };
   }
 
@@ -115,13 +120,13 @@ public class ClassroomSpecification {
 
   public static final class Builder {
 
-    private String name = null;
-    private Integer capacityMin = null;
-    private Integer capacityMax = null;
-    private String equipment = null;
-    private Integer floor = null;
-    private RoomType roomType = null;
-    private Boolean available = null;
+    private String name;
+    private Integer capacityMin;
+    private Integer capacityMax;
+    private String equipment;
+    private Integer floor;
+    private RoomType roomType;
+    private Boolean available;
 
     private Builder() {
     }

@@ -1,10 +1,12 @@
 package edu.maplewood.master_schedule.controller.helper.mapper;
 
+import edu.maplewood.master_schedule.controller.dto.response.ResponseList;
 import edu.maplewood.master_schedule.controller.dto.response.StudentResponse;
 import edu.maplewood.master_schedule.entity.Student;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
 
 public class StudentMapper {
 
@@ -29,4 +31,16 @@ public class StudentMapper {
         students.size());
     return students.stream().map(StudentMapper::toResponse).toList();
   }
+
+  public static ResponseList<StudentResponse> toResponse(Page<Student> students) {
+    logger.debug(
+        "Mapping Page of Students entities to ResponseList<StudentResponse>. Total teachers: {}",
+        students.getTotalElements());
+    List<Student> studentList = students.getContent();
+    List<StudentResponse> studentResponses = toResponse(studentList);
+
+    return new ResponseList<>(students.getTotalElements(),
+        students.getNumber(), students.getSize(), studentResponses);
+  }
+
 }

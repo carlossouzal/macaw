@@ -6,6 +6,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
@@ -24,6 +26,7 @@ import org.hibernate.annotations.Formula;
 public class Student {
 
   @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   @Column(name = "first_name", length = 50, nullable = false)
   private String firstName;
@@ -70,5 +73,6 @@ public class Student {
 
   public enum StudentStatus {
     ACTIVE,
+    INACTIVE
   }
 }

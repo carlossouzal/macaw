@@ -9,4 +9,6 @@ public class DayOfWeekConverter extends LowercaseEnumConverter<DayOfWeek> {
   public DayOfWeekConverter() {
     super(DayOfWeek.class);
   }
+
+
 }

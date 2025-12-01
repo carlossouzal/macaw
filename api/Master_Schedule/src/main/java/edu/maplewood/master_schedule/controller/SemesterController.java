@@ -2,8 +2,8 @@ package edu.maplewood.master_schedule.controller;
 
 import edu.maplewood.master_schedule.config.Constants;
 import edu.maplewood.master_schedule.controller.dto.request.CreateSemesterRequest;
+import edu.maplewood.master_schedule.controller.dto.response.ResponseList;
 import edu.maplewood.master_schedule.controller.dto.response.SemesterResponse;
-import edu.maplewood.master_schedule.controller.dto.response.SemesterResponseList;
 import edu.maplewood.master_schedule.controller.helper.mapper.SemesterMapper;
 import edu.maplewood.master_schedule.controller.parameters.SemesterCriteria;
 import edu.maplewood.master_schedule.entity.Semester;
@@ -38,7 +38,8 @@ public class SemesterController {
 
   @GetMapping(produces = "application/json")
   @ResponseStatus(HttpStatus.OK)
-  public SemesterResponseList getSemesters(@Valid @ModelAttribute SemesterCriteria criteria) {
+  public ResponseList<SemesterResponse> getSemesters(
+      @Valid @ModelAttribute SemesterCriteria criteria) {
     LOGGER.debug("Fetching all semesters");
     Page<Semester> semesterPage = semesterService.find(criteria);
     return SemesterMapper.toResponse(semesterPage);

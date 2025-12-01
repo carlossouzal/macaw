@@ -6,13 +6,13 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public record SemesterResponse(
-    long id,
+    Long id,
     String name,
-    int year,
+    Integer year,
     @JsonProperty("order_in_year") OrderInYear orderInYear,
     @JsonProperty("start_date") LocalDate startDate,
     @JsonProperty("end_date") LocalDate endDate,
-    @JsonProperty("is_active") boolean isActive,
+    @JsonProperty("is_active") Boolean isActive,
     @JsonProperty("created_at") LocalDateTime createdAt
 ) {
 

@@ -10,20 +10,20 @@ import edu.maplewood.master_schedule.repository.StudentRepository;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
 public class StudentServiceTest {
 
   private StudentRepository repository;
   private StudentService service;
   private CourseSectionService courseSectionService;
+  private CourseService courseService;
 
   @BeforeEach
   public void setUp() {
     repository = mock(StudentRepository.class);
     courseSectionService = mock(CourseSectionService.class);
-    service = new StudentService(repository, courseSectionService);
+    courseService = mock(CourseService.class);
+    service = new StudentService(repository, courseSectionService, courseService);
   }
 
   @Test

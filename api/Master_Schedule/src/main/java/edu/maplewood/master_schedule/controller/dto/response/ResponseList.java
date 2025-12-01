@@ -2,11 +2,11 @@ package edu.maplewood.master_schedule.controller.dto.response;
 
 import java.util.List;
 
-public record SemesterResponseList(
+public record ResponseList<T>(
     Long total,
     Integer page,
     Integer size,
-    List<SemesterResponse> semesters
+    List<T> items
 ) {
 
 }

@@ -9,6 +9,7 @@ import edu.maplewood.master_schedule.entity.Semester;
 import edu.maplewood.master_schedule.entity.Specialization;
 import edu.maplewood.master_schedule.entity.Teacher;
 import edu.maplewood.master_schedule.exception.NoAvailableResource;
+import edu.maplewood.master_schedule.repository.ScheduleAssignmentRepository;
 import jakarta.transaction.Transactional;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ import org.springframework.stereotype.Service;
 public class ScheduleService {
 
   private static final Logger logger = LoggerFactory.getLogger(ScheduleService.class);
+  private final ScheduleAssignmentRepository scheduleAssignmentRepository;
   private final CourseService courseService;
   private final CourseSectionService courseSectionService;
   private final StudentService studentService;
@@ -37,12 +39,14 @@ public class ScheduleService {
       CourseService courseService,
       CourseSectionService courseSectionService,
       TeacherService teacherService,
-      ClassroomService classroomService) {
+      ClassroomService classroomService,
+      ScheduleAssignmentRepository scheduleAssignmentRepository) {
     this.courseService = courseService;
     this.courseSectionService = courseSectionService;
     this.teacherService = teacherService;
     this.classroomService = classroomService;
     this.studentService = studentService;
+    this.scheduleAssignmentRepository = scheduleAssignmentRepository;
   }
 
   @Transactional
@@ -114,7 +118,7 @@ public class ScheduleService {
     int already = section.getScheduleAssignments().size();
 
     List<DayOfWeek> teachingDays = Arrays.stream(DayOfWeek.values())
-        .filter(day -> day == DayOfWeek.SUNDAY || day == DayOfWeek.SATURDAY).toList();
+        .filter(day -> day != DayOfWeek.SUNDAY && day != DayOfWeek.SATURDAY).toList();
 
     for (Teacher teacher : teachers) {
       section.setTeacher(teacher);
@@ -125,7 +129,7 @@ public class ScheduleService {
         Map<DayOfWeek, List<Integer>> daySlots = new HashMap<>();
 
         for (DayOfWeek day : teachingDays) {
-          if (countTeacherHours(teacher, day) <= teacher.getMaxDailyHours()) {
+          if (countTeacherHours(teacher, day) >= teacher.getMaxDailyHours()) {
             continue;
           }
           if (remaining <= 0) {
@@ -138,7 +142,7 @@ public class ScheduleService {
             }
 
             List<Integer> used = daySlots.computeIfAbsent(day, d -> new ArrayList<>());
-            if (validSlotSequence(used, slot)) {
+            if (!validSlotSequence(used, slot)) {
               continue;
             }
 
@@ -173,7 +177,7 @@ public class ScheduleService {
     assignment.setClassroom(classroom);
     assignment.setDayOfWeek(day);
     assignment.setTimeSlot(slot);
-    return assignment;
+    return scheduleAssignmentRepository.save(assignment);
   }
 
   private CourseSection assign(List<ScheduleAssignment> assignments, CourseSection section) {
@@ -184,12 +188,9 @@ public class ScheduleService {
   private boolean validSlotSequence(List<Integer> slots, int newSlot) {
     List<Integer> test = new ArrayList<>(slots);
     test.add(newSlot);
-    test.sort(Integer::compareTo);
 
-    for (int i = 1; i < test.size(); i++) {
-      if (test.get(i) - test.get(i - 1) > 2) {
-        return false;
-      }
+    if (test.size() >= 3) {
+      return false;
     }
 
     return true;

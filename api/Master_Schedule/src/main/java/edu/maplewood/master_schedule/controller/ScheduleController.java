@@ -41,6 +41,5 @@ public class ScheduleController {
     LOGGER.debug("Creating a new schedule");
     Semester semester = semesterService.findById(scheduleGenerateRequest.semesterId());
     scheduleService.generateSchedule(semester);
-    // Implementation goes here
   }
 }

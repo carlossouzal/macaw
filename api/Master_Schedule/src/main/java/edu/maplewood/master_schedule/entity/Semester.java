@@ -4,6 +4,8 @@ import edu.maplewood.master_schedule.entity.converter.SemesterOrderConverter;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import java.time.LocalDate;
@@ -19,6 +21,7 @@ import org.hibernate.annotations.CreationTimestamp;
 public class Semester {
 
   @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   @Column(nullable = false, length = 50)
   private String name;

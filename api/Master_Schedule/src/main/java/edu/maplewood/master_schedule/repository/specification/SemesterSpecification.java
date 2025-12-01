@@ -14,6 +14,7 @@ import org.springframework.util.StringUtils;
 public final class SemesterSpecification {
 
   private SemesterSpecification() {
+    throw new IllegalStateException("Utility class");
   }
 
   public static Specification<Semester> build(
@@ -131,5 +132,83 @@ public final class SemesterSpecification {
       }
       return cb.lessThanOrEqualTo(p, end);
     };
+  }
+
+  public static Builder builder() {
+    return new Builder();
+  }
+
+  public static class Builder {
+
+    private String name;
+    private Integer yearMin;
+    private Integer yearMax;
+    private OrderInYear orderInYear;
+    private LocalDate startDateBegin;
+    private LocalDate startDateEnd;
+    private LocalDate endDateBegin;
+    private LocalDate endDateEnd;
+    private Boolean isActive;
+    private LocalDateTime createdAtBegin;
+    private LocalDateTime createdAtEnd;
+
+    private Builder() {
+      
+    }
+
+    public Builder name(String name) {
+      this.name = name;
+      return this;
+    }
+
+    public Builder yearMin(Integer yearMin) {
+      this.yearMin = yearMin;
+      return this;
+    }
+
+    public Builder yearMax(Integer yearMax) {
+      this.yearMax = yearMax;
+      return this;
+    }
+
+    public Builder orderInYear(OrderInYear orderInYear) {
+      this.orderInYear = orderInYear;
+      return this;
+    }
+
+    public Builder startDateBegin(LocalDate startDateBegin) {
+      this.startDateBegin = startDateBegin;
+      return this;
+    }
+
+    public Builder startDateEnd(LocalDate startDateEnd) {
+      this.startDateEnd = startDateEnd;
+      return this;
+    }
+
+    public Builder endDateBegin(LocalDate endDateBegin) {
+      this.endDateBegin = endDateBegin;
+      return this;
+    }
+
+    public Builder endDateEnd(LocalDate endDateEnd) {
+      this.endDateEnd = endDateEnd;
+      return this;
+    }
+
+    public Builder isActive(Boolean isActive) {
+      this.isActive = isActive;
+      return this;
+    }
+
+    public Builder createdAtBegin(LocalDateTime createdAtBegin) {
+      this.createdAtBegin = createdAtBegin;
+      return this;
+    }
+
+    public Builder createdAtEnd(LocalDateTime createdAtEnd) {
+      this.createdAtEnd = createdAtEnd;
+      return this;
+    }
   }
 }

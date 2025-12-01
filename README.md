@@ -2,8 +2,14 @@
 
 ### From project base directory
 
+API(api/Master_Schedule):
 ```
-docker build -f docker/Dockerfile -t macaw:latest .
+docker build -f docker/Dockerfile -t macaw-api:latest .
+```
+
+UI (ui/macaw):
+```
+docker build -f docker/Dockerfile -t macaw-ui:latest .
 ```
 
 ### Run container
@@ -11,29 +17,31 @@ docker build -f docker/Dockerfile -t macaw:latest .
 ```
 docker run --rm -p 8080:8080 \
  -e SPRING_PROFILES_ACTIVE=default \
- macaw:latest
+ macaw-[ui|api]:latest
 ```
 
-## Solution
+#### Docker compose:
 
-- Didn't accomplish a complete solution for the problem.
+At the base path, run:
+```
+docker compose up
+```
+
+to open in a browser:
+- Chrome: click the address bar and explicitly type http://localhost:8080
+- Firefox: Preferences → Privacy & Security → HTTPS-Only Mode → disable (or add an exception for localhost). You can also clear HSTS for localhost: about:config → search “hsts” and clear site data for localhost.
+- Safari: explicitly type http://localhost:8080 and ensure no HTTPS-only extensions are forcing HTTPS.
+
+## Solution
 
 - What we have:
     - An initial setup.
     - Entities and relationships defined.
     - Basic services created.
     - Repositories for data access.
-    - Specifications for querying for:
-        - Classroom
-        - CourseSection
-        - Semester
-        - Student
-        - Teacher
-    - Basic controller for:
-        - Student
-        - Semester
-        - Schedule
-    - Basic ControllerAdvice dealing with 404.
+    - Specifications for querying
+    - Basic controller
+    - Basic ControllerAdvice
     - Auxiliary:
         - DTOs
         - Mappers
@@ -47,11 +55,7 @@ Then the services would provide the business logic, and the controllers would ex
 
 The auxiliary classes would help with data transfer, mapping and validation.
 
-The initial purpose were to provide a Schedule Master, but also a extensible CRUD and listing
-methods,
-to be presented in the future with a frontend application.
-
-- Missing Unit Tests and Integration Tests.
+- Missing Some Unit Tests and Integration Tests.
 - Missing complete CRUD operations for all entities.
 - Missing complete validation logic.
 - Missing complete error handling.

@@ -11,9 +11,10 @@ import java.util.Objects;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.StringUtils;
 
-public class StudentSpecification {
+public final class StudentSpecification {
 
   private StudentSpecification() {
+    throw new IllegalStateException("Utility class");
   }
 
   public static Specification<Student> build(
@@ -25,7 +26,7 @@ public class StudentSpecification {
       Integer enrollmentYearMax,
       Integer expectedGraduationYearMin,
       Integer expectedGraduationYearMax,
-      Course prerquiredCourse,
+      Course prerequiredCourse,
       Student.StudentStatus status
   ) {
     List<Specification<Student>> specs = new ArrayList<>();
@@ -34,7 +35,7 @@ public class StudentSpecification {
     specs.add(gradeLevelBetween(gradeLevelMin, gradeLevelMax));
     specs.add(enrollmentYearBetween(enrollmentYearMin, enrollmentYearMax));
     specs.add(expectedGraduationYearBetween(expectedGraduationYearMin, expectedGraduationYearMax));
-    specs.add(prerequiredCourseContains(prerquiredCourse));
+    specs.add(prerequiredCourseContains(prerequiredCourse));
     specs.add(isStatus(status));
 
     return specs.stream()
@@ -150,16 +151,16 @@ public class StudentSpecification {
 
   public static final class Builder {
 
-    private String name = null;
-    private String email = null;
-    private Integer gradeLevelMin = null;
-    private Integer gradeLevelMax = null;
-    private Integer enrollmentYearMin = null;
-    private Integer enrollmentYearMax = null;
-    private Integer expectedGraduationYearMin = null;
-    private Integer expectedGraduationYearMax = null;
-    private Course prerquiredCourse = null;
-    private Student.StudentStatus status = null;
+    private String name;
+    private String email;
+    private Integer gradeLevelMin;
+    private Integer gradeLevelMax;
+    private Integer enrollmentYearMin;
+    private Integer enrollmentYearMax;
+    private Integer expectedGraduationYearMin;
+    private Integer expectedGraduationYearMax;
+    private Course prerquiredCourse;
+    private Student.StudentStatus status;
 
     private Builder() {
     }

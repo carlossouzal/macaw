@@ -1,15 +1,22 @@
 package edu.maplewood.master_schedule.service;
 
+import edu.maplewood.master_schedule.controller.parameters.TeacherCriteria;
 import edu.maplewood.master_schedule.entity.Specialization;
 import edu.maplewood.master_schedule.entity.Teacher;
 import edu.maplewood.master_schedule.repository.TeacherRepository;
 import edu.maplewood.master_schedule.repository.specification.TeacherSpecification;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.criteria.JoinType;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,16 +25,52 @@ import org.springframework.transaction.annotation.Transactional;
 public class TeacherService {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(TeacherService.class);
+  private final SpecializationService specializationService;
   private final TeacherRepository repository;
 
   @Autowired
-  public TeacherService(TeacherRepository repository) {
+  public TeacherService(TeacherRepository repository, SpecializationService specializationService) {
     this.repository = repository;
+    this.specializationService = specializationService;
   }
 
   public List<Teacher> findAll() {
     LOGGER.debug("Retrieving all teachers from the repository");
     return repository.findAll();
+  }
+
+  public Page<Teacher> find(TeacherCriteria criteria) {
+    LOGGER.debug("Fetching all teachers from the repository");
+    Specialization specialization = null;
+    if (criteria.specializationId() != null) {
+      specialization = specializationService.findById(criteria.specializationId());
+    }
+
+    Specification<Teacher> specs = TeacherSpecification.builder()
+        .name(criteria.name())
+        .email(criteria.email())
+        .maxDailyHoursBegin(criteria.maxDailyHoursBegin())
+        .maxDailyHoursEnd(criteria.maxDailyHoursEnd())
+        .createdAtBegin(criteria.createdAtBegin())
+        .createdAtEnd(criteria.createdAtEnd())
+        .specialization(specialization)
+        .build();
+
+    Pageable pageable = PageRequest.of(criteria.page(), criteria.size(),
+        criteria.sortDirection().equals("ASC") ?
+            Sort.by(criteria.sortBy()).ascending() :
+            Sort.by(criteria.sortBy()).descending()
+    );
+
+    return repository.findAll(specs, pageable);
+  }
+
+  public Teacher findById(Long id) {
+    Optional<Teacher> teacher = repository.findById(id);
+    if (teacher.isEmpty()) {
+      throw new EntityNotFoundException("Teacher with id " + id + " not found");
+    }
+    return teacher.get();
   }
 
   @Transactional(readOnly = true)

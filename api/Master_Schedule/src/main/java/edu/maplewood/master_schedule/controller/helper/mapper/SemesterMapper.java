@@ -1,8 +1,8 @@
 package edu.maplewood.master_schedule.controller.helper.mapper;
 
 import edu.maplewood.master_schedule.controller.dto.request.CreateSemesterRequest;
+import edu.maplewood.master_schedule.controller.dto.response.ResponseList;
 import edu.maplewood.master_schedule.controller.dto.response.SemesterResponse;
-import edu.maplewood.master_schedule.controller.dto.response.SemesterResponseList;
 import edu.maplewood.master_schedule.entity.Semester;
 import edu.maplewood.master_schedule.entity.Semester.OrderInYear;
 import java.util.List;
@@ -16,6 +16,7 @@ public class SemesterMapper {
 
   public static SemesterResponse toResponse(Semester semester) {
     logger.debug("Converting semester to DTO");
+    
     return new SemesterResponse(
         semester.getId(),
         semester.getName(),
@@ -33,13 +34,13 @@ public class SemesterMapper {
     return semesters.stream().map(SemesterMapper::toResponse).toList();
   }
 
-  public static SemesterResponseList toResponse(Page<Semester> semesterPage) {
+  public static ResponseList<SemesterResponse> toResponse(Page<Semester> semesterPage) {
     logger.debug("Mapping list of Semester entities to SemesterResponseList. Total semesters: {}",
         semesterPage.getTotalElements());
     List<Semester> semesterList = semesterPage.getContent();
     List<SemesterResponse> semesterResponses = toResponse(semesterList);
 
-    return new SemesterResponseList(semesterPage.getTotalElements(),
+    return new ResponseList<>(semesterPage.getTotalElements(),
         semesterPage.getNumber(), semesterPage.getSize(), semesterResponses);
   }
 

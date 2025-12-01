@@ -2,11 +2,14 @@ package edu.maplewood.master_schedule.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,6 +21,7 @@ import org.hibernate.annotations.CreationTimestamp;
 public class CourseSection {
 
   @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   @Column(nullable = false, length = 10)
   private String code;
@@ -33,10 +37,10 @@ public class CourseSection {
   @CreationTimestamp
   private LocalDateTime createdAt;
 
-  @OneToMany
+  @OneToMany(mappedBy = "courseSection")
   @ToString.Exclude
   @EqualsAndHashCode.Exclude
-  private List<ScheduleAssignment> scheduleAssignments;
+  private List<ScheduleAssignment> scheduleAssignments = Collections.emptyList();
 
   @ManyToMany(mappedBy = "courseSectionsEnrolled")
   @ToString.Exclude
